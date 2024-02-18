@@ -74,7 +74,7 @@ else{
     echo "Docker already installed.... continuing...."
 }
 
-$docker = Get-Process -Name "Docker Desktop"  -ErrorAction SilentlyContinue
+$docker = Get-Process -Name "Docker Desktop" -ErrorAction SilentlyContinue
 # Is docker running? If it's not start it
 if(-not $docker){
     echo ""
@@ -140,10 +140,10 @@ echo ""
 # If the user has said they want to clear volume and rebuild from scratch, call container in setup mode
 if ($inp -eq "1" ){
     echo ""
-    echo "Deleting [$PWD\$VolumePath] (Ignore any Folder Not Found- errors)"
-    Remove-Item -Path "$PWD\$VolumePath" -Recurse -Force > $null
-    echo "Creating [$PWD\$VolumePath]"
-    New-Item -ItemType Directory -Name "$VolumePath" > $null
+    echo "Deleting Folder [$PWD\$VolumePath]"
+    Remove-Item -Path "$PWD\$VolumePath" -Recurse -Force -ErrorAction SilentlyContinue
+    echo "Creating Folder [$PWD\$VolumePath]"
+    New-Item -ItemType Directory -Name "$VolumePath" -ErrorAction SilentlyContinue
 
     echo ""
     echo ""
