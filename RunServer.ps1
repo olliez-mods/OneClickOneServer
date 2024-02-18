@@ -67,10 +67,12 @@ else{
 }
 
 # Does docker exist? If it does, attempt to start the proccess, otherwise prompt use to start manualy
-if(Test-Path 'C:\Program Files\Docker\Docker\Docker Desktop.exe'){
+if($docker.Status -eq "Running"){
     #Start-Process -FilePath "C:\Program Files\Docker\Docker\Docker Desktop.exe" -WindowStyle Minimized
 }
 else{
+    echo ""
+    echo "ERROR:"
     echo "Start the Docker Engine in the Docker Desktop app before pressing ENTER to continue."
     Read-Host -Prompt "<enter to continue>"
 }
