@@ -82,13 +82,17 @@ if($docker.Status -ne "Running"){
         $process = Get-Process -Name com.docker.service
     
     } while (-not $process -and $timeout -lt 20)
+
+    # If we hit the timeout
+    if ($timeout -ge 20) {
+        echo ""
+        echo "ERROR:"
+        echo "Start the Docker Engine in the Docker Desktop app before pressing ENTER to continue."
+        Read-Host -Prompt "<enter to continue>"
+    }
 }
-else{
-    echo ""
-    echo "ERROR:"
-    echo "Start the Docker Engine in the Docker Desktop app before pressing ENTER to continue."
-    Read-Host -Prompt "<enter to continue>"
-}
+
+echo ""
 
 # =====
 

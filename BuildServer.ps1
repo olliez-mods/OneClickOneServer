@@ -72,13 +72,30 @@ else{
     echo "Docker already installed.... continuing...."
 }
 
-# Does docker exist? If it does, attempt to start the proccess, otherwise prompt use to start manualy
-if(Test-Path 'C:\Program Files\Docker\Docker\Docker Desktop.exe'){
-    #Start-Process -FilePath "C:\Program Files\Docker\Docker\Docker Desktop.exe" -WindowStyle Minimized
-}
-else{
-    echo "Start the Docker Engine in the Docker Desktop app before pressing ENTER to continue."
-    Read-Host -Prompt "<enter to continue>"
+# Is docker running? If it's not start it
+if($docker.Status -ne "Running"){
+    echo ""
+    echo "Docker Desktop not running, attempting to start it automatically"
+    start-Process -FilePath "C:\Program Files\Docker\Docker\Docker Desktop.exe" -WindowStyle Minimized
+
+    $timeout = 0
+    do {
+        Start-Sleep -Seconds 1  # Wait for 1 second before checking again
+        $timeout += 1
+
+        echo "Waiting.. $timeout seconds"
+        # Check if the process is running
+        $process = Get-Process -Name com.docker.service
+    
+    } while (-not $process -and $timeout -lt 20)
+
+    # If we hit the timeout
+    if ($timeout -ge 20) {
+        echo ""
+        echo "ERROR:"
+        echo "Start the Docker Engine in the Docker Desktop app before pressing ENTER to continue."
+        Read-Host -Prompt "<enter to continue>"
+    }
 }
 
 echo ""
