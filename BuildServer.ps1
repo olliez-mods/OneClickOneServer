@@ -1,8 +1,12 @@
 # Original Script derived from danomation: https://github.com/danomation/onehouroneclick/tree/main
 # Improved by ME, https://github.com/olliez-mods
 
-# Run with max perms avaliable to the user, May cause ignorable error
+# Run with max perms available to the user, May cause ignorable error
+echo "Setting perms, ignore any error"
 Set-ExecutionPolicy -Scope CurrentUser Unrestricted
+echo ""
+echo ""
+echo ""
 
 
 # ===== Import config variable =====
@@ -119,7 +123,7 @@ echo ""
     }
 
 
-# First delete old ocol_server image and container if it exists
+# First delete old ocos_server image and container if it exists
 echo ""
 echo "Removing Imag (name=ocos_server) and Container (name=ocos) if they exist"
 docker rmi -f ocos_server
