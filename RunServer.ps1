@@ -2,7 +2,7 @@
 # Improved by ME, https://github.com/olliez-mods
 
 # Run with max perms avaliable to the user, May cause ignorable error
-Set-ExecutionPolicy -Scope CurrentUser Unrestricted
+Set-ExecutionPolicy -Scope CurrentUser Unrestricted -ErrorAction SilentlyContinue
 
 # ===== Load ContainerConfig.ini =====
 
@@ -93,6 +93,7 @@ echo "Starting container (in detach mode)..."
 docker run --name=ocos -d -v $AbsVolumePaths -p $ports --restart $restartFlag -e "MODE=0" ocos_server
 echo ""
 echo "IMOPRTANT: You can see logs inside the Docker Desktop application..."
-echo 'In the containers tab (on the left) select "ocos" and you can access logs form that page'
+echo 'In the containers tab (on the left) select "ocos" and you can access logs from that page'
+echo 'It might take a couple minutes for the logs to appear'
 
 Read-Host -Prompt "Program ended, press Enter to continue"

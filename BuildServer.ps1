@@ -3,7 +3,7 @@
 
 # Run with max perms available to the user, May cause ignorable error
 echo "Setting perms, ignore any error"
-Set-ExecutionPolicy -Scope CurrentUser Unrestricted
+Set-ExecutionPolicy -Scope CurrentUser Unrestricted -ErrorAction SilentlyContinue
 echo ""
 echo ""
 echo ""
