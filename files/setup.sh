@@ -1,4 +1,4 @@
-#!/bin/ash
+#!/bin/bash
 
 # Move into volume
 cd volume

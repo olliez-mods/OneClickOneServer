@@ -1,4 +1,4 @@
-#!/bin/ash
+#!/bin/bash
 
 echo ""
 echo "Container Started in MODE $MODE"
