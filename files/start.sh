@@ -1,4 +1,5 @@
 #!/bin/ash
+
 echo ""
 echo "Container Started in MODE $MODE"
 echo "ls"

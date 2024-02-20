@@ -7,7 +7,7 @@ RUN apk update
 RUN apk add --no-cache git
 RUN apk add --no-cache make
 RUN apk add --no-cache g++
-RUN apk add --no-cache bash
+RUN apk add --no-cache --update bash
 # Optional text editors
 RUN apk add --no-cache vim
 RUN apk add --no-cache nano
