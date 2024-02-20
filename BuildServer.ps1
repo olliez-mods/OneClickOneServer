@@ -124,7 +124,6 @@ if ($inp -eq "1" ){
 
     echo ""
     echo ""
-    echo "Setup should be complete..."
 }
 
 echo ""
