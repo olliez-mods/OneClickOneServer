@@ -111,7 +111,7 @@ if ($inp -eq "1" ){
     echo "Deleting Folder [$PWD\$VolumePath]"
     Remove-Item -Path "$PWD\$VolumePath" -Recurse -Force -ErrorAction SilentlyContinue
     echo "Creating Folder [$PWD\$VolumePath]"
-    New-Item -ItemType Directory -Name "$VolumePath" -ErrorAction SilentlyContinue
+    New-Item -ItemType Directory -Name "$VolumePath" > $nul
 
     echo ""
     echo ""
