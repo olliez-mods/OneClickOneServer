@@ -1,6 +1,6 @@
 #!/bin/bash
 echo ""
-echo "Container Started in MODE:$MODE"
+echo "Container Started in MODE $MODE"
 
 if [ "$MODE" -eq "0" ]; then
     echo "Starting OHOL server"
