@@ -42,38 +42,6 @@ echo "Loaded PersistentServer=$PersistentServer"
 echo "Loaded VolumePath:$VolumePath"
 echo "  (Full Path [$PWD\$VolumePath])"
 
-
-# ====== Check All Needed Programs Are Installed, Enabled, And running =====
-
-# Check if WSL (Windows subsystem for linux) is installed
-echo ""
-echo "Checking pre-requisites for OHOL"
-if(Test-Path 'c:\windows\system32\wsl.exe'){
-    echo "WSL already installed.... continuing...."
-}
-else {
-    echo "Enabling WSL...."
-    # Tellng windows we want to enable WSL and all parent features
-    dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
-    Read-Host -Prompt "** Manually close all powershell windows and re-run the script **"
-    exit
-}
-
-# Check if docker is installed
-if(-not (Test-Path 'C:\Program Files\Docker\Docker\Docker Desktop.exe')){
-    echo "Downloading and installing Docker"
-    echo "This may take a while...."
-    $ProgressPreference = 'SilentlyContinue'
-    # Use curl and Start-Proccess to download the installer and run it
-    curl "https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe" -o "Docker Desktop Installer.exe"
-    Start-Process 'Docker Desktop Installer.exe' -Wait -ArgumentList 'install', '--quiet --accept-license'
-    Read-Host -Prompt "** Manually close all powershell windows and re-run the script **"
-    exit
-}
-else{
-    echo "Docker already installed.... continuing...."
-}
-
 $docker = Get-Process -Name "Docker Desktop" -ErrorAction SilentlyContinue
 # Is docker running? If it's not start it
 if(-not $docker){
