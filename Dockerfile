@@ -9,6 +9,10 @@ RUN apk add --no-cache make
 RUN apk add --no-cache g++
 RUN apk add --no-cache --update bash
 
+# Install python3 and add link
+RUN apk add --no-cache python3 && \
+    if [[ ! -e /usr/bin/python ]]; then ln -sf /usr/bin/python3 /usr/bin/python; fi
+
 # Optional text editor
 RUN apk add --no-cache vim
 
