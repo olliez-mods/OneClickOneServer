@@ -1,27 +1,22 @@
-How to setup and run OneClickOneServer
+How to setup and run OneClickOneServer<br>
 
-All needed prerequisites should be installed automaticly (you may need to restart powershell a coupld time)
-If you come accross errors please report them :D
+Note: Make sure you install Docker Desktop [Link](https://www.docker.com/products/docker-desktop/) and it is running properly!.<br>
 
-1. Configure server Config
-    Make sure that you look over "ContainerConfig.ini" and update any needed settings
+1. Configure server Config<br>
+    Make sure that you look over "ContainerConfig.ini" and update any needed settings<br>
 
-2. Run BuildServer.ps1
-    Right click the ps1 file and "run with Powershell" this will go through the proccess of:
-    enabling WSL
-    Installing Docker Desktop
-    Creating Docker Image
-    Creating Docker container and running it in setup mode
-    Once the ocntainer starts, it should clone the OHOL repositories and then build them (this may take a while)
+2. Run BuildServer.ps1<br>
+    Right-click the ps1 file and "run with Powershell" This will go through the process of:<br>
+    - Creating Docker Image<br>
+    - Creating a Docker container and running it in setup mode<br>
+    Once the container starts, it should clone the OHOL repositories and then build them (this may take a while)<br>
 
-3. Run RunServer.ps1
-    Now run the RunServer.ps1 Powershell script,  this will start the server.
-    Note: The RuneServer script does not track the logs of the server, to view them:
-        Open docker Desktop (Skip past any prompts until you get to the home screen)
-        Select "Containers" from the menu on the left
-        Select "ocos" to open up the container
-        You can now view the logs
+3. Run RunServer.ps1<br>
+    Now run the RunServer.ps1 Powershell script,  this will start the server.<br>
+    Note: The RuneServer script does not track the logs of the server, to view them:<br>
+        Open docker Desktop (Skip past any prompts until you get to the home screen)<br>
+        Select "Containers" from the menu on the left<br>
+        Select "ocos" to open up the container<br>
+        You can now view the logs<br>
 
-
-Notes:
     
