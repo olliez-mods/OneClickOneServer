@@ -13,13 +13,14 @@ git clone https://github.com/jasonrohrer/OneLifeData7.git
 
 echo ""
 echo ""
-echo "Initital Cloning complete, fetching tags..."
+echo "Initial Cloning complete, fetching tags..."
 echo ""
 
 cd minorGems
 git fetch --tags
 latestTaggedVersion=`git for-each-ref --sort=-creatordate --format '%(refname:short)' --count=1 refs/tags/OneLife_v* | sed -e 's/OneLife_v//'`
-git checkout -q OneLife_v$latestTaggedVersion
+#git checkout -q OneLife_v$latestTaggedVersion
+git checkout -q OneLife_v414
 
 
 cd ../OneLife
