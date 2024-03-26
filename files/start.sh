@@ -4,6 +4,8 @@ echo ""
 echo "Container Started in MODE $MODE"
 echo "We received variables, $SERVER_VERSION and $GEMS_VERSION"
 
+exit
+
 if [ "$MODE" -eq "1" ]; then
     echo "Setup mode..."
     #cat setup.sh
