@@ -1,6 +1,4 @@
 # TODO Let user choose option
-# TODO make function to verify existence of needed folders and 
-# files (see if we have a volume, if servers been built, etc.)
 # TODO Allow user to copy world files / import world files (overwrite)
 # TODO Let user see all settings (grouped by catagory) and edit each one
 # let user see specifics about each setting and see all related commands (eg. EVE X, EVE Y, FORCE EVE)
@@ -34,16 +32,18 @@ echo "  (Full Path [$PWD\$VolumePath])"
 
 # =======================
 
+# Test path existence for the folders and files below
 $volumeFolderExists = Test-Path "$PWD/$VolumePath"
 $minorGemsExist = Test-Path "$PWD/$VolumePath/minorGems"
 $OneLifeExists = Test-Path "$PWD/$VolumePath/OneLife"
 $OneLifeData7Exists = Test-Path "$PWD/$VolumePath/OneLifeData7"
 $OneLifeServerExists = Test-Path "$PWD/$VolumePath/OneLife/server/"
-$OneLifeServerAppExists = Test-Path "$PWD/$VolumePath/OneLife/server/OneLifeServer"
+$OneLifeServerAppExists = Test-Path "$PWD/$VolumePath/OneLife/server/OneLifeServer" # file
 
 echo ""
 echo ""
 
+# If any of them dont exist, throw an error message and exit
 if(-not $volumeFolderExists){
     echo "Volume folder was not found, make sure you have built the server before using ServerTools"
     Read-Host "."
@@ -65,5 +65,21 @@ if(-not $OneLifeServerAppExists){
     exit
 }
 
-echo "here we are"
+# Menu
+function Print-Menu {
+    echo ""
+    echo ""
+    echo ""
+    echo "Welcome to ServerTools by Oliver, please choose an option:"
+    echo "1: Copy World Files"
+    echo "2: Import World Files"
+    echo "3: View server settings"
+}
+
+Clear-Host
+Print-Menu
+$option = Read-Host ":"
+
+
+echo $option
 $hi = Read-Host "hi"
