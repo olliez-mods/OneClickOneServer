@@ -36,6 +36,8 @@ Get-Content -Path $iniFilePath | ForEach-Object {
 $port = $iniConfig['Port']
 $PersistentServer = $iniConfig['PersistentServer']
 $VolumePath = $iniConfig['VolumePath']
+$ServerVersion = $iniConfig['ServerVersion']
+$MinorGemsVersion = $iniConfig['MinorGemsVersion']
 
 echo "Loaded port=$port"
 echo "Loaded PersistentServer=$PersistentServer"
@@ -115,7 +117,7 @@ if ($buildFromScratch){
     $AbsVolumePaths = "$PWD" + "\" + "$VolumePath" + "\:/files/volume"
 
     # then start container in setup mode (MODE env is set to 1)
-    docker run --name=ocos -it -v $AbsVolumePaths -e "MODE=1" ocos_server
+    docker run --name=ocos -it -v $AbsVolumePaths -e "MODE=1" -e "SERVER_VERSION=$ServerVersion" -e "GEMS_VERSION=$MinorGemsVersion" ocos_server
 
     echo ""
     echo ""
