@@ -54,6 +54,8 @@ fi
 echo "checking out OneLifeData7 with version v$latestTaggedVersionB"
 git checkout -q OneLife_v$latestTaggedVersionB
 
+echo ""
+echo ""
 
 cd ..
 
