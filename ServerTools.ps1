@@ -41,20 +41,27 @@ $OneLifeData7Exists = Test-Path "$PWD/$VolumePath/OneLifeData7"
 $OneLifeServerExists = Test-Path "$PWD/$VolumePath/OneLife/server/"
 $OneLifeServerAppExists = Test-Path "$PWD/$VolumePath/OneLife/server/OneLifeServer"
 
+echo ""
+echo ""
+
 if(-not $volumeFolderExists){
-    Read-Host "Volume folder was not found, make sure you have built the server before using ServerTools"
+    echo "Volume folder was not found, make sure you have built the server before using ServerTools"
+    Read-Host "."
     exit
 }
 if((-not $minorGemsExist) -or (-not $OneLifeExists) -or (-not $OneLifeData7Exists)){
-    Read-Host "One or all of the main folder (OneLife/MinorGems/OneLifeData7) was not found, make sure that the server built successfully before using ServerTools"
+    echo "One or all of the main folders (OneLife/MinorGems/OneLifeData7) was not found, make sure that the server built successfully before using ServerTools"
+    Read-Host "."
     exit
 }
 if(-not $OneLifeServerExists){
-    Read-Host "The server folder (./$VolumePath/OneLife/server) cannot be found, make sure that the server built successfully before using ServerTools"
+    echo "The server folder (./$VolumePath/OneLife/server) cannot be found, make sure that the server built successfully before using ServerTools"
+    Read-Host "."
     exit
 }
 if(-not $OneLifeServerAppExists){
-    Read-Host "Could not find OneLifeServer application (./$VolumePath/OneLife/server/OneLifeServer), make sure that the server built successfully before using ServerTools"
+    echo "Could not find OneLifeServer application (./$VolumePath/OneLife/server/OneLifeServer), make sure that the server built successfully before using ServerTools"
+    Read-Host "."
     exit
 }
 
