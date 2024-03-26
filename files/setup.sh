@@ -16,22 +16,42 @@ echo ""
 echo "Initial Cloning complete, fetching tags..."
 echo ""
 
+# MINOR GEMS
 cd minorGems
 git fetch --tags
-latestTaggedVersion=`git for-each-ref --sort=-creatordate --format '%(refname:short)' --count=1 refs/tags/OneLife_v* | sed -e 's/OneLife_v//'`
-#git checkout -q OneLife_v$latestTaggedVersion
-git checkout -q OneLife_v414
+
+latestTaggedVersion=$GEMS_VERSION
+# Check if the version is "latest"
+if [ "$GEMS_VERSION" == "latest" ]; then
+    $latestTaggedVersion=`git for-each-ref --sort=-creatordate --format '%(refname:short)' --count=1 refs/tags/OneLife_v* | sed -e 's/OneLife_v//'`
+fi
+echo "checking out MinorGems with version v$latestTaggedVersion"
+git checkout -q OneLife_v$latestTaggedVersion
 
 
+# ONE LIFE
 cd ../OneLife
 git fetch --tags
-latestTaggedVersionA=`git for-each-ref --sort=-creatordate --format '%(refname:short)' --count=1 refs/tags/OneLife_v* | sed -e 's/OneLife_v//'`
+
+# Check if the version is "latest"
+latestTaggedVersionA=$SERVER_VERSION
+if [ "$SERVER_VERSION" == "latest" ]; then
+    latestTaggedVersionA=`git for-each-ref --sort=-creatordate --format '%(refname:short)' --count=1 refs/tags/OneLife_v* | sed -e 's/OneLife_v//'`
+fi
+echo "checking out OneLife with version v$latestTaggedVersionA"
 git checkout -q OneLife_v$latestTaggedVersionA
 
 
+# ONE LIFE DATA
 cd ../OneLifeData7
 git fetch --tags
-latestTaggedVersionB=`git for-each-ref --sort=-creatordate --format '%(refname:short)' --count=1 refs/tags/OneLife_v* | sed -e 's/OneLife_v//'`
+
+# Check if the version is "latest"
+latestTaggedVersionB=$SERVER_VERSION
+if [ "$SERVER_VERSION" == "latest" ]; then
+    latestTaggedVersionB=`git for-each-ref --sort=-creatordate --format '%(refname:short)' --count=1 refs/tags/OneLife_v* | sed -e 's/OneLife_v//'`
+fi
+echo "checking out OneLifeData7 with version v$latestTaggedVersionB"
 git checkout -q OneLife_v$latestTaggedVersionB
 
 
@@ -44,7 +64,7 @@ cd ..
 
 echo ""
 echo ""
-echo "Done, building..."
+echo "Done, cloning..."
 echo ""
 
 cd OneLife/server
