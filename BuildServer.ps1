@@ -2,7 +2,7 @@
 # Improved by ME, https://github.com/olliez-mods
 
 # Run with max perms available to the user, May cause ignorable error
-echo "Setting perms, ignore any error"
+echo "Setting permissions, ignore any error"
 Set-ExecutionPolicy -Scope CurrentUser Unrestricted -ErrorAction SilentlyContinue
 echo ""
 echo ""
@@ -53,47 +53,42 @@ if(-not $docker){
 
 echo ""
 
-# =====
-    # By default, delete the volume
-    $inp = ""
+
+# By default, don't delete the volume
+$buildFromScratch = $false
+
+
+# If volume folder exists
+if (Test-Path "$PWD/$VolumePath" -PathType Container) {
 
     # Get the items within the volume folder
     $items = Get-ChildItem -Path $folderPath
 
-    # If volume folder exists
-    if (Test-Path "$PWD/$VolumePath" -PathType Container) {
-        # If the folder has items in it, ask the user if we want to clear items, or build with existing files
-        if ($items.Count -ne 0) {
-            echo ""
-            echo "The provided volume folder [$PWD\$VolumePath] has existing files in it."
-            echo "- You can clear all files in this folder and make a fresh build (Reccomended)"
-            echo "Warning: This will delete any world files, so make a backup if nessasary"
-            echo ""
-            echo "- You can build the server using existing files in the volume, withought cloning or making"
-            echo "1. Clear"
-            echo "2. Use Existing"
-            echo "3. Quit"
-            $inp = Read-Host "(1/2/q)"
+    # If the folder has items in it, ask the user if we want to clear items, or build with existing files
+    if ($items.Count -ne 0) {
+        echo ""
+        echo "The provided volume folder [$PWD\$VolumePath] has existing files in it."
+        echo "Would you like to clear all files in this folder and make a fresh build?"
+        echo "Warning: This will delete any world files, so make a backup if nessasary"
+        $inp = Read-Host "Clear folder?(Y/N):"
 
-            if ($inp -eq "1") {
-            }elseif ($inp -eq "2") {
-
-            }else {
-                echo ""
-                Read-Host "Exiting Build script, Press Eneter to coninue"
-                exit
-            }
+        if ($inp -eq "Y" -Or $inp -eq "y") {
+            $buildFromScratch = $true
+        }else {
+            echo ""
+            Read-Host "Exiting Build script, Press Eneter to coninue"
+            exit
         }
-    # The folder doesn't exist, so we want to build from scratch and enter setup mode
-    }else{
-        $inp = "1"
-
     }
+# The folder doesn't exist, so we want to build from scratch and enter setup mode
+}else{
+    $buildFromScratch = $true
+}
 
 
 # First delete old ocos_server image and container if it exists
 echo ""
-echo "Removing Imag (name=ocos_server) and Container (name=ocos) if they exist"
+echo "Removing Image (name=ocos_server) and Container (name=ocos) if they exist"
 docker rmi -f ocos_server
 docker rm -f ocos
 echo ""
@@ -106,7 +101,7 @@ docker build -t ocos_server .
 echo ""
 
 # If the user has said they want to clear volume and rebuild from scratch, call container in setup mode
-if ($inp -eq "1" ){
+if ($buildFromScratch){
     echo ""
     echo "Deleting Folder [$PWD\$VolumePath]"
     Remove-Item -Path "$PWD\$VolumePath" -Recurse -Force -ErrorAction SilentlyContinue
