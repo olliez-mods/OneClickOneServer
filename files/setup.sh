@@ -47,8 +47,8 @@ cd ../OneLifeData7
 git fetch --tags
 
 # Check if the version is "latest"
-latestTaggedVersionB=$SERVER_VERSION
-if [ "$SERVER_VERSION" == "latest" ]; then
+latestTaggedVersionB=$SERVER_DATA_VERSION
+if [ "$SERVER_DATA_VERSION" == "latest" ]; then
     latestTaggedVersionB=`git for-each-ref --sort=-creatordate --format '%(refname:short)' --count=1 refs/tags/OneLife_v* | sed -e 's/OneLife_v//'`
 fi
 echo "checking out OneLifeData7 with version v$latestTaggedVersionB"

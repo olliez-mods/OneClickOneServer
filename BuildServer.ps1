@@ -37,6 +37,7 @@ $port = $iniConfig['Port']
 $PersistentServer = $iniConfig['PersistentServer']
 $VolumePath = $iniConfig['VolumePath']
 $ServerVersion = $iniConfig['ServerVersion']
+$ServerDataVersion = $iniConfig['ServerDataVersion']
 $MinorGemsVersion = $iniConfig['MinorGemsVersion']
 
 echo "Loaded port=$port"
@@ -44,6 +45,7 @@ echo "Loaded PersistentServer=$PersistentServer"
 echo "Loaded VolumePath=$VolumePath"
 echo "  (Full Path [$PWD\$VolumePath])"
 echo "ServerVersion=$ServerVersion"
+echo "ServerDataVersion=$ServerDataVersion"
 echo "MinorGemsVersion=$MinorGemsVersion"
 
 $docker = Get-Process -Name "Docker Desktop" -ErrorAction SilentlyContinue
@@ -132,7 +134,7 @@ if ($buildFromScratch){
     $AbsVolumePaths = "$PWD" + "\" + "$VolumePath" + "\:/files/volume"
 
     # then start container in setup mode (MODE env is set to 1)
-    docker run --name=ocos -it -v $AbsVolumePaths -e "MODE=1" -e "SERVER_VERSION=$ServerVersion" -e "GEMS_VERSION=$MinorGemsVersion" ocos_server
+    docker run --name=ocos -it -v $AbsVolumePaths -e "MODE=1" -e "SERVER_VERSION=$ServerVersion" -e "GEMS_VERSION=$MinorGemsVersion" -e "SERVER_DATA_VERSION=$ServerDataVersion" ocos_server
 
     echo ""
     echo ""
