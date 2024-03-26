@@ -1,6 +1,6 @@
 How to setup and run OneClickOneServer<br>
 
-Note: Make sure you install Docker Desktop [Link](https://www.docker.com/products/docker-desktop/) and it is running properly!.<br>
+Note: Make sure you install Docker Desktop ([Link](https://www.docker.com/products/docker-desktop/)) and it is running properly!.<br>
 
 1. Configure server Config<br>
     Make sure that you look over "ContainerConfig.ini" and update any needed settings<br>
