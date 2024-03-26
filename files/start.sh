@@ -2,9 +2,8 @@
 
 echo ""
 echo "Container Started in MODE $MODE"
-echo "We received variables, $SERVER_VERSION and $GEMS_VERSION"
+echo "We received versions, SERVER_VERSION=$SERVER_VERSION and GEMS_VERSION=$GEMS_VERSION"
 
-exit
 
 if [ "$MODE" -eq "1" ]; then
     echo "Setup mode..."
