@@ -23,7 +23,7 @@ git fetch --tags
 latestTaggedVersion=$GEMS_VERSION
 # Check if the version is "latest"
 if [ "$GEMS_VERSION" == "latest" ]; then
-    $latestTaggedVersion=`git for-each-ref --sort=-creatordate --format '%(refname:short)' --count=1 refs/tags/OneLife_v* | sed -e 's/OneLife_v//'`
+    latestTaggedVersion=`git for-each-ref --sort=-creatordate --format '%(refname:short)' --count=1 refs/tags/OneLife_v* | sed -e 's/OneLife_v//'`
 fi
 echo "checking out MinorGems with version v$latestTaggedVersion"
 git checkout -q OneLife_v$latestTaggedVersion
