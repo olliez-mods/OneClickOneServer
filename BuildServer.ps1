@@ -41,8 +41,10 @@ $MinorGemsVersion = $iniConfig['MinorGemsVersion']
 
 echo "Loaded port=$port"
 echo "Loaded PersistentServer=$PersistentServer"
-echo "Loaded VolumePath:$VolumePath"
+echo "Loaded VolumePath=$VolumePath"
 echo "  (Full Path [$PWD\$VolumePath])"
+echo "ServerVersion=$ServerVersion"
+echo "MinorGemsVersion=$MinorGemsVersion"
 
 $docker = Get-Process -Name "Docker Desktop" -ErrorAction SilentlyContinue
 # Is docker running? If it's not start it
@@ -54,6 +56,19 @@ if(-not $docker){
 }
 
 echo ""
+
+# Verify that the given versions are valid (either a number or "latest")
+$regexForVersion = "^latest$|^\d+$"
+if(-not ($ServerVersion -match $regexForVersion)){
+    echo "ServerVersion:`"$ServerVersion`" is not an accepted format, is should be a number or `"latest`""
+    Read-Host "Press enter"
+    exit
+}
+if(-not ($MinorGemsVersion -match $regexForVersion)){
+    echo "MinorGemsVersion:`"$MinorGemsVersion`" is not an accepted format, is should be a number or `"latest`""
+    Read-Host "Press enter"
+    exit
+}
 
 
 # By default, don't delete the volume
