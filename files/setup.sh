@@ -13,26 +13,49 @@ git clone https://github.com/jasonrohrer/OneLifeData7.git
 
 echo ""
 echo ""
-echo "Initital Cloning complete, fetching tags..."
+echo "Initial Cloning complete, fetching tags..."
 echo ""
 
+# MINOR GEMS
 cd minorGems
 git fetch --tags
-latestTaggedVersion=`git for-each-ref --sort=-creatordate --format '%(refname:short)' --count=1 refs/tags/OneLife_v* | sed -e 's/OneLife_v//'`
+
+latestTaggedVersion=$GEMS_VERSION
+# Check if the version is "latest"
+if [ "$GEMS_VERSION" == "latest" ]; then
+    latestTaggedVersion=`git for-each-ref --sort=-creatordate --format '%(refname:short)' --count=1 refs/tags/OneLife_v* | sed -e 's/OneLife_v//'`
+fi
+echo "checking out MinorGems with version v$latestTaggedVersion"
 git checkout -q OneLife_v$latestTaggedVersion
 
 
+# ONE LIFE
 cd ../OneLife
 git fetch --tags
-latestTaggedVersionA=`git for-each-ref --sort=-creatordate --format '%(refname:short)' --count=1 refs/tags/OneLife_v* | sed -e 's/OneLife_v//'`
+
+# Check if the version is "latest"
+latestTaggedVersionA=$SERVER_VERSION
+if [ "$SERVER_VERSION" == "latest" ]; then
+    latestTaggedVersionA=`git for-each-ref --sort=-creatordate --format '%(refname:short)' --count=1 refs/tags/OneLife_v* | sed -e 's/OneLife_v//'`
+fi
+echo "checking out OneLife with version v$latestTaggedVersionA"
 git checkout -q OneLife_v$latestTaggedVersionA
 
 
+# ONE LIFE DATA
 cd ../OneLifeData7
 git fetch --tags
-latestTaggedVersionB=`git for-each-ref --sort=-creatordate --format '%(refname:short)' --count=1 refs/tags/OneLife_v* | sed -e 's/OneLife_v//'`
+
+# Check if the version is "latest"
+latestTaggedVersionB=$SERVER_DATA_VERSION
+if [ "$SERVER_DATA_VERSION" == "latest" ]; then
+    latestTaggedVersionB=`git for-each-ref --sort=-creatordate --format '%(refname:short)' --count=1 refs/tags/OneLife_v* | sed -e 's/OneLife_v//'`
+fi
+echo "checking out OneLifeData7 with version v$latestTaggedVersionB"
 git checkout -q OneLife_v$latestTaggedVersionB
 
+echo ""
+echo ""
 
 cd ..
 
@@ -43,7 +66,7 @@ cd ..
 
 echo ""
 echo ""
-echo "Done, building..."
+echo "Done, cloning..."
 echo ""
 
 cd OneLife/server
@@ -63,5 +86,5 @@ serverVersion=`cat serverCodeVersionNumber.txt`
 
 echo
 echo
-echo "Done building server with version v$serverVersion"
+echo "Done building server"
 echo

@@ -15,6 +15,10 @@ RUN apk add --no-cache vim
 COPY files /files
 WORKDIR /files
 
+# Make sure the scripts have the correct line endings (linux doesn't like \r\n)
+RUN dos2unix ./start.sh
+RUN dos2unix ./setup.sh
+
 # Make the script executable
 RUN chmod +x ./start.sh
 RUN chmod +x ./setup.sh
