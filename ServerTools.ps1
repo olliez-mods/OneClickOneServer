@@ -45,7 +45,7 @@ if(-not $volumeFolderExists){
     Read-Host "Volume folder was not found, make sure you have built the server before using ServerTools"
     exit
 }
-if((-not $minorGemsExist) -or (-not $OneLifeExists) -or (-not OneLifeData7Exists)){
+if((-not $minorGemsExist) -or (-not $OneLifeExists) -or (-not $OneLifeData7Exists)){
     Read-Host "One or all of the main folder (OneLife/MinorGems/OneLifeData7) was not found, make sure that the server built successfully before using ServerTools"
     exit
 }
