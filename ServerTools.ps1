@@ -31,8 +31,21 @@ Get-Content -Path $iniFilePath | ForEach-Object {
 $VolumePath = $iniConfig['VolumePath']
 echo "Loaded VolumePath:$VolumePath"
 echo "  (Full Path [$PWD\$VolumePath])"
-
 # =======================
+
+$volumeFolderExists = Test-Path "$PWD/$VolumePath"
+$minorGemsExist = Test-Path "$PWD/$VolumePath/minorGems"
+$OneLifeExists = Test-Path "$PWD/$VolumePath/OneLife"
+$OneLifeData7Exists = Test-Path "$PWD/$VolumePath/OneLifeData7"
+$OneLifeServerExists = Test-Path "$PWD/$VolumePath/OneLife/server/"
+$OneLifeServerAppExists = Test-Path "$PWD/$VolumePath/OneLife/server/OneLifeServer"
+
+echo $volumeFolderExists
+echo $minorGemsExist
+echo $OneLifeExists
+echo $OneLifeData7Exists
+echo $OneLifeServerExists
+echo $OneLifeServerAppExists
 
 
 $hi = Read-Host "hi"
