@@ -1,8 +1,6 @@
 # Original Script was derived from danomation: https://github.com/danomation/onehouroneclick/tree/main
 # Improved by ME, https://github.com/olliez-mods
 
-# Run with max perms avaliable to the user, May cause ignorable error
-Set-ExecutionPolicy -Scope CurrentUser Unrestricted -ErrorAction SilentlyContinue
 
 # ===== Load ContainerConfig.ini =====
 
