@@ -19,7 +19,7 @@ Get-Content -Path $iniFilePath | ForEach-Object {
     # Skip empty lines and comments
     if (-not [string]::IsNullOrEmpty($line) -and $line -notmatch '^/s*#') {
         # Extract key and value
-        $key, $value = $line -split '/s*=/s*', 2
+        $key, $value = $line -split '\s*=\s*', 2
 
         # Add key-value pair to the hashtable
         $iniConfig[$key] = $value
