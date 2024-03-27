@@ -23,9 +23,9 @@ Get-Content -Path $iniFilePath | ForEach-Object {
     $line = $_.Trim()
     
     # Skip empty lines and comments
-    if (-not [string]::IsNullOrEmpty($line) -and $line -notmatch '^/s*#') {
+    if (-not [string]::IsNullOrEmpty($line) -and $line -notmatch '^\s*#') {
         # Extract key and value
-        $key, $value = $line -split '/s*=/s*', 2
+        $key, $value = $line -split '\s*=\s*', 2
 
         # Add key-value pair to the hashtable
         $iniConfig[$key] = $value
@@ -60,7 +60,7 @@ if(-not $docker){
 echo ""
 
 # Verify that the given versions are valid (either a number or "latest")
-$regexForVersion = "^latest$|^/d+$"
+$regexForVersion = "^latest$|^\d+$"
 if(-not ($ServerVersion -match $regexForVersion)){
     echo "ServerVersion:`"$ServerVersion`" is not an accepted format, is should be a number or `"latest`""
     Read-Host "Press enter"
