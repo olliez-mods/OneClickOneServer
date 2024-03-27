@@ -1,6 +1,8 @@
 # Original Script was derived from danomation: https://github.com/danomation/onehouroneclick/tree/main
 # Improved by ME, https://github.com/olliez-mods
 
+echo ""
+echo ""
 
 # ===== Load ContainerConfig.ini =====
 

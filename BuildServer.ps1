@@ -1,7 +1,8 @@
 # Original Script derived from danomation: https://github.com/danomation/onehouroneclick/tree/main
 # Improved by ME, https://github.com/olliez-mods
 
-
+echo ""
+echo ""
 
 # ===== Import config variable =====
 
