@@ -34,7 +34,7 @@ $VolumePath = $iniConfig['VolumePath']
 echo "Loaded port=$port"
 echo "Loaded PersistentServer=$PersistentServer"
 echo "Loaded VolumePath:$VolumePath"
-echo "  (Full Path [$PWD/$VolumePath])"
+echo "  (Full Path [$PWD\$VolumePath])"
 
 $docker = Get-Process -Name "Docker Desktop"  -ErrorAction SilentlyContinue
 # Is docker running? If it's not start it
