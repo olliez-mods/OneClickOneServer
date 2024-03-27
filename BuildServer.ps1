@@ -43,7 +43,7 @@ $MinorGemsVersion = $iniConfig['MinorGemsVersion']
 echo "Loaded port=$port"
 echo "Loaded PersistentServer=$PersistentServer"
 echo "Loaded VolumePath=$VolumePath"
-echo "  (Full Path [$PWD/$VolumePath])"
+echo "  (Full Path [$PWD\$VolumePath])"
 echo "ServerVersion=$ServerVersion"
 echo "ServerDataVersion=$ServerDataVersion"
 echo "MinorGemsVersion=$MinorGemsVersion"
@@ -86,7 +86,7 @@ if (Test-Path "$PWD/$VolumePath" -PathType Container) {
     # If the folder has items in it, ask the user if we want to clear items, or build with existing files
     if ($items.Count -ne 0) {
         echo ""
-        echo "The provided volume folder [$PWD/$VolumePath] has existing files in it."
+        echo "The provided volume folder [$PWD\$VolumePath] has existing files in it."
         echo "Would you like to clear all files in this folder and make a fresh build?"
         echo "Warning: This will delete any world files, so make a backup if nessasary"
         $inp = Read-Host "Clear folder?(Y/N):"
@@ -122,9 +122,9 @@ echo ""
 # If the user has said they want to clear volume and rebuild from scratch, call container in setup mode
 if ($buildFromScratch){
     echo ""
-    echo "Deleting Folder [$PWD/$VolumePath]"
+    echo "Deleting Folder [$PWD\$VolumePath]"
     Remove-Item -Path "$PWD/$VolumePath" -Recurse -Force -ErrorAction SilentlyContinue
-    echo "Creating Folder [$PWD/$VolumePath]"
+    echo "Creating Folder [$PWD\$VolumePath]"
     New-Item -ItemType Directory -Name "$VolumePath" > $nul
 
     echo ""
