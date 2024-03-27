@@ -1,12 +1,6 @@
 # Original Script derived from danomation: https://github.com/danomation/onehouroneclick/tree/main
 # Improved by ME, https://github.com/olliez-mods
 
-# Run with max perms available to the user, May cause ignorable error
-echo "Setting permissions, ignore any error"
-Set-ExecutionPolicy -Scope CurrentUser Unrestricted -ErrorAction SilentlyContinue
-echo ""
-echo ""
-echo ""
 
 
 # ===== Import config variable =====
