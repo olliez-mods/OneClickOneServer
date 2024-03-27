@@ -1,8 +1,8 @@
 # Original Script was derived from danomation: https://github.com/danomation/onehouroneclick/tree/main
 # Improved by ME, https://github.com/olliez-mods
 
-# Run with max perms avaliable to the user, May cause ignorable error
-Set-ExecutionPolicy -Scope CurrentUser Unrestricted -ErrorAction SilentlyContinue
+echo ""
+echo ""
 
 # ===== Load ContainerConfig.ini =====
 
@@ -17,7 +17,7 @@ Get-Content -Path $iniFilePath | ForEach-Object {
     $line = $_.Trim()
     
     # Skip empty lines and comments
-    if (-not [string]::IsNullOrEmpty($line) -and $line -notmatch '^\s*#') {
+    if (-not [string]::IsNullOrEmpty($line) -and $line -notmatch '^/s*#') {
         # Extract key and value
         $key, $value = $line -split '\s*=\s*', 2
 
@@ -41,7 +41,7 @@ $docker = Get-Process -Name "Docker Desktop"  -ErrorAction SilentlyContinue
 if(-not $docker){
     echo ""
     echo "Docker Desktop not running, attempting to start it automatically"
-    start-Process -FilePath "C:\Program Files\Docker\Docker\Docker Desktop.exe" -WindowStyle Minimized
+    start-Process -FilePath "C:/Program Files/Docker/Docker/Docker Desktop.exe" -WindowStyle Minimized
     Read-Host "Press enter once Docker Desktop starts (If it doesn't start, do it maunaly)"
 }
 
@@ -53,7 +53,7 @@ echo ""
 docker rm -f ocos
 
 $ports = "$port" + ":8005"
-$AbsVolumePaths = "$PWD" + "\" + "$VolumePath" + "\:/files/volume"
+$AbsVolumePaths = "$PWD" + "/" + "$VolumePath" + "/:/files/volume"
 
 # If the flag is set to "always" then when the computer or Docker Desktop reboots, this container will restart automagically
 $restartFlag = "no"

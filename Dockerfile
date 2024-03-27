@@ -12,7 +12,9 @@ RUN apk add --no-cache --update bash
 # Optional text editor
 RUN apk add --no-cache vim
 
-COPY files /files
+RUN mkdir files
+COPY scripts/setup.sh /files
+COPY scripts/start.sh /files
 WORKDIR /files
 
 # Make sure the scripts have the correct line endings (linux doesn't like \r\n)

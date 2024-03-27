@@ -1,13 +1,8 @@
 # Original Script derived from danomation: https://github.com/danomation/onehouroneclick/tree/main
 # Improved by ME, https://github.com/olliez-mods
 
-# Run with max perms available to the user, May cause ignorable error
-echo "Setting permissions, ignore any error"
-Set-ExecutionPolicy -Scope CurrentUser Unrestricted -ErrorAction SilentlyContinue
 echo ""
 echo ""
-echo ""
-
 
 # ===== Import config variable =====
 
@@ -53,7 +48,7 @@ $docker = Get-Process -Name "Docker Desktop" -ErrorAction SilentlyContinue
 if(-not $docker){
     echo ""
     echo "Docker Desktop not running, attempting to start it automatically"
-    start-Process -FilePath "C:\Program Files\Docker\Docker\Docker Desktop.exe" -WindowStyle Minimized
+    start-Process -FilePath "C:/Program Files/Docker/Docker/Docker Desktop.exe" -WindowStyle Minimized
     Read-Host "Press enter once Docker Desktop starts (If it doesn't start, do it maunaly)"
 }
 
@@ -123,7 +118,7 @@ echo ""
 if ($buildFromScratch){
     echo ""
     echo "Deleting Folder [$PWD\$VolumePath]"
-    Remove-Item -Path "$PWD\$VolumePath" -Recurse -Force -ErrorAction SilentlyContinue
+    Remove-Item -Path "$PWD/$VolumePath" -Recurse -Force -ErrorAction SilentlyContinue
     echo "Creating Folder [$PWD\$VolumePath]"
     New-Item -ItemType Directory -Name "$VolumePath" > $nul
 
@@ -131,7 +126,7 @@ if ($buildFromScratch){
     echo ""
     echo "Starting container in setup mode..."
 
-    $AbsVolumePaths = "$PWD" + "\" + "$VolumePath" + "\:/files/volume"
+    $AbsVolumePaths = "$PWD" + "/" + "$VolumePath" + "/:/files/volume"
 
     # then start container in setup mode (MODE env is set to 1)
     docker run --name=ocos -it -v $AbsVolumePaths -e "MODE=1" -e "SERVER_VERSION=$ServerVersion" -e "GEMS_VERSION=$MinorGemsVersion" -e "SERVER_DATA_VERSION=$ServerDataVersion" ocos_server
