@@ -17,9 +17,9 @@ Get-Content -Path $iniFilePath | ForEach-Object {
     $line = $_.Trim()
     
     # Skip empty lines and comments
-    if (-not [string]::IsNullOrEmpty($line) -and $line -notmatch '^\s*#') {
+    if (-not [string]::IsNullOrEmpty($line) -and $line -notmatch '^/s*#') {
         # Extract key and value
-        $key, $value = $line -split '\s*=\s*', 2
+        $key, $value = $line -split '/s*=/s*', 2
 
         # Add key-value pair to the hashtable
         $iniConfig[$key] = $value
@@ -34,14 +34,14 @@ $VolumePath = $iniConfig['VolumePath']
 echo "Loaded port=$port"
 echo "Loaded PersistentServer=$PersistentServer"
 echo "Loaded VolumePath:$VolumePath"
-echo "  (Full Path [$PWD\$VolumePath])"
+echo "  (Full Path [$PWD/$VolumePath])"
 
 $docker = Get-Process -Name "Docker Desktop"  -ErrorAction SilentlyContinue
 # Is docker running? If it's not start it
 if(-not $docker){
     echo ""
     echo "Docker Desktop not running, attempting to start it automatically"
-    start-Process -FilePath "C:\Program Files\Docker\Docker\Docker Desktop.exe" -WindowStyle Minimized
+    start-Process -FilePath "C:/Program Files/Docker/Docker/Docker Desktop.exe" -WindowStyle Minimized
     Read-Host "Press enter once Docker Desktop starts (If it doesn't start, do it maunaly)"
 }
 
@@ -53,7 +53,7 @@ echo ""
 docker rm -f ocos
 
 $ports = "$port" + ":8005"
-$AbsVolumePaths = "$PWD" + "\" + "$VolumePath" + "\:/files/volume"
+$AbsVolumePaths = "$PWD" + "/" + "$VolumePath" + "/:/files/volume"
 
 # If the flag is set to "always" then when the computer or Docker Desktop reboots, this container will restart automagically
 $restartFlag = "no"

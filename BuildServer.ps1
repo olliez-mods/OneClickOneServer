@@ -23,9 +23,9 @@ Get-Content -Path $iniFilePath | ForEach-Object {
     $line = $_.Trim()
     
     # Skip empty lines and comments
-    if (-not [string]::IsNullOrEmpty($line) -and $line -notmatch '^\s*#') {
+    if (-not [string]::IsNullOrEmpty($line) -and $line -notmatch '^/s*#') {
         # Extract key and value
-        $key, $value = $line -split '\s*=\s*', 2
+        $key, $value = $line -split '/s*=/s*', 2
 
         # Add key-value pair to the hashtable
         $iniConfig[$key] = $value
@@ -43,7 +43,7 @@ $MinorGemsVersion = $iniConfig['MinorGemsVersion']
 echo "Loaded port=$port"
 echo "Loaded PersistentServer=$PersistentServer"
 echo "Loaded VolumePath=$VolumePath"
-echo "  (Full Path [$PWD\$VolumePath])"
+echo "  (Full Path [$PWD/$VolumePath])"
 echo "ServerVersion=$ServerVersion"
 echo "ServerDataVersion=$ServerDataVersion"
 echo "MinorGemsVersion=$MinorGemsVersion"
@@ -53,14 +53,14 @@ $docker = Get-Process -Name "Docker Desktop" -ErrorAction SilentlyContinue
 if(-not $docker){
     echo ""
     echo "Docker Desktop not running, attempting to start it automatically"
-    start-Process -FilePath "C:\Program Files\Docker\Docker\Docker Desktop.exe" -WindowStyle Minimized
+    start-Process -FilePath "C:/Program Files/Docker/Docker/Docker Desktop.exe" -WindowStyle Minimized
     Read-Host "Press enter once Docker Desktop starts (If it doesn't start, do it maunaly)"
 }
 
 echo ""
 
 # Verify that the given versions are valid (either a number or "latest")
-$regexForVersion = "^latest$|^\d+$"
+$regexForVersion = "^latest$|^/d+$"
 if(-not ($ServerVersion -match $regexForVersion)){
     echo "ServerVersion:`"$ServerVersion`" is not an accepted format, is should be a number or `"latest`""
     Read-Host "Press enter"
@@ -86,7 +86,7 @@ if (Test-Path "$PWD/$VolumePath" -PathType Container) {
     # If the folder has items in it, ask the user if we want to clear items, or build with existing files
     if ($items.Count -ne 0) {
         echo ""
-        echo "The provided volume folder [$PWD\$VolumePath] has existing files in it."
+        echo "The provided volume folder [$PWD/$VolumePath] has existing files in it."
         echo "Would you like to clear all files in this folder and make a fresh build?"
         echo "Warning: This will delete any world files, so make a backup if nessasary"
         $inp = Read-Host "Clear folder?(Y/N):"
@@ -122,16 +122,16 @@ echo ""
 # If the user has said they want to clear volume and rebuild from scratch, call container in setup mode
 if ($buildFromScratch){
     echo ""
-    echo "Deleting Folder [$PWD\$VolumePath]"
-    Remove-Item -Path "$PWD\$VolumePath" -Recurse -Force -ErrorAction SilentlyContinue
-    echo "Creating Folder [$PWD\$VolumePath]"
+    echo "Deleting Folder [$PWD/$VolumePath]"
+    Remove-Item -Path "$PWD/$VolumePath" -Recurse -Force -ErrorAction SilentlyContinue
+    echo "Creating Folder [$PWD/$VolumePath]"
     New-Item -ItemType Directory -Name "$VolumePath" > $nul
 
     echo ""
     echo ""
     echo "Starting container in setup mode..."
 
-    $AbsVolumePaths = "$PWD" + "\" + "$VolumePath" + "\:/files/volume"
+    $AbsVolumePaths = "$PWD" + "/" + "$VolumePath" + "/:/files/volume"
 
     # then start container in setup mode (MODE env is set to 1)
     docker run --name=ocos -it -v $AbsVolumePaths -e "MODE=1" -e "SERVER_VERSION=$ServerVersion" -e "GEMS_VERSION=$MinorGemsVersion" -e "SERVER_DATA_VERSION=$ServerDataVersion" ocos_server
