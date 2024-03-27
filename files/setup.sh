@@ -7,8 +7,10 @@ echo ""
 echo "Cloning: minorGems, OneLife, OneLifeData7, this may take a while..."
 echo ""
 
-git clone https://github.com/jasonrohrer/minorGems.git	
+git clone https://github.com/jasonrohrer/minorGems.git
+echo ""
 git clone https://github.com/jasonrohrer/OneLife.git
+echo ""
 git clone https://github.com/jasonrohrer/OneLifeData7.git
 
 echo ""
