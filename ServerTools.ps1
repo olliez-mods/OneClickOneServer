@@ -83,7 +83,24 @@ $option = Read-Host ":"
 if("$option" -eq "1"){
     . "./scripts/getWorldFiles.ps1"
     $worldFiles = Get-WorldFiles
+    Remove-Item "$PWD/WORLDCOPY" -Force -Recurse
+    mkdir "$PWD/WORLDCOPY"
+    Write-Host ""
+    Write-Host "Copying world files from `"$PWD/$volumePath/OneLife/server/`""
     foreach ($fileName in $worldFiles) {
-        Write-Output "hello $fileName"
+        try {
+            Copy-Item -Path "$PWD/$volumePath/OneLife/server/$fileName" -Destination "$PWD/WORLDCOPY/$fileName" -Recurse -ErrorAction Stop
+            Write-Host "`"$fileName`" copied successfully." -ForegroundColor Green
+        } catch {
+            Write-Host "`"$fileName`" could not be copied" -ForegroundColor Red
+        }
+    }
+    Write-Host ""
+    Write-Host "Copying settings..."
+    try {
+        Copy-Item -Path "$PWD/$volumePath/OneLife/server/settings" -Destination "$PWD/WORLDCOPY/" -Recurse -ErrorAction Stop
+        Write-Host "Settings copied successfully" -ForegroundColor Green
+    } catch {
+        Write-Host "Settings folder could not be copied" -ForegroundColor Red
     }
 }
