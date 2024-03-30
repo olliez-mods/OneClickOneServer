@@ -75,7 +75,7 @@ $buildFromScratch = $false
 if (Test-Path "$PWD/$VolumePath" -PathType Container) {
 
     # Get the items within the volume folder
-    $items = Get-ChildItem -Path $folderPath
+    $items = Get-ChildItem -Path "$PWD/$VolumePath"
 
     # If the folder has items in it, ask the user if we want to clear items, or build with existing files
     if ($items.Count -ne 0) {
