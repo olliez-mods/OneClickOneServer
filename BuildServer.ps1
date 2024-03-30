@@ -73,7 +73,6 @@ if(-not ($MinorGemsVersion -match $regexForVersion)){
 
 # By default, don't delete the volume
 $removeCurrentVolume = $false
-$continue = $false
 
 # If volume folder exists
 if (Test-Path "$PWD/$VolumePath" -PathType Container) {
@@ -91,7 +90,6 @@ if (Test-Path "$PWD/$VolumePath" -PathType Container) {
 
         if ($inp -eq "Y" -Or $inp -eq "y") {
             $removeCurrentVolume = $true
-            $continue = $true
         }else {
             Write-Output ""
             Read-Host "Exiting Build script, Press Enter to coninue"
@@ -101,7 +99,6 @@ if (Test-Path "$PWD/$VolumePath" -PathType Container) {
 # The folder doesn't exist, so we want to build from scratch and enter setup mode
 }else{
     $removeCurrentVolume = $false
-    $continue = $true
 }
 
 # First delete old ocos_server image and container if it exists
