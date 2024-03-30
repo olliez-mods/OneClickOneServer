@@ -45,7 +45,40 @@ if(-not $docker){
 
 Write-Output ""
 
-# =====
+# ==========
+
+# Test path existence for the folders and files below
+$volumeFolderExists = Test-Path "$PWD/$VolumePath"
+$minorGemsExist = Test-Path "$PWD/$VolumePath/minorGems"
+$OneLifeExists = Test-Path "$PWD/$VolumePath/OneLife"
+$OneLifeData7Exists = Test-Path "$PWD/$VolumePath/OneLifeData7"
+$OneLifeServerExists = Test-Path "$PWD/$VolumePath/OneLife/server/"
+$OneLifeServerAppExists = Test-Path "$PWD/$VolumePath/OneLife/server/OneLifeServer" # file
+
+Write-Output ""
+Write-Output ""
+
+# If any of them dont exist, throw an error message and exit
+if(-not $volumeFolderExists){
+    Write-Output "Volume folder was not found, make sure you make sure that the server built successfully before running"
+    Read-Host "."
+    exit
+}
+if((-not $minorGemsExist) -or (-not $OneLifeExists) -or (-not $OneLifeData7Exists)){
+    Write-Output "One or all of the main folders (OneLife/MinorGems/OneLifeData7) was not found, make sure that the server built successfully before running"
+    Read-Host "."
+    exit
+}
+if(-not $OneLifeServerExists){
+    Write-Output "The server folder (./$VolumePath/OneLife/server) cannot be found, make sure that the server built successfully before running"
+    Read-Host "."
+    exit
+}
+if(-not $OneLifeServerAppExists){
+    Write-Output "Could not find OneLifeServer application (./$VolumePath/OneLife/server/OneLifeServer), make sure that the server built successfully before running"
+    Read-Host "."
+    exit
+}
 
 # First delete old ocol container if it exists
 docker rm -f ocos
