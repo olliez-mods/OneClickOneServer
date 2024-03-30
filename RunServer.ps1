@@ -31,21 +31,21 @@ $port = $iniConfig['Port']
 $PersistentServer = $iniConfig['PersistentServer']
 $VolumePath = $iniConfig['VolumePath']
 
-echo "Loaded port=$port"
-echo "Loaded PersistentServer=$PersistentServer"
-echo "Loaded VolumePath:$VolumePath"
-echo "  (Full Path [$PWD\$VolumePath])"
+Write-Output "Loaded port=$port"
+Write-Output "Loaded PersistentServer=$PersistentServer"
+Write-Output "Loaded VolumePath:$VolumePath"
+Write-Output "  (Full Path [$PWD\$VolumePath])"
 
 $docker = Get-Process -Name "Docker Desktop"  -ErrorAction SilentlyContinue
 # Is docker running? If it's not start it
 if(-not $docker){
-    echo ""
-    echo "Docker Desktop not running, attempting to start it automatically"
+    Write-Output ""
+    Write-Output "Docker Desktop not running, attempting to start it automatically"
     start-Process -FilePath "C:/Program Files/Docker/Docker/Docker Desktop.exe" -WindowStyle Minimized
     Read-Host "Press enter once Docker Desktop starts (If it doesn't start, do it maunaly)"
 }
 
-echo ""
+Write-Output ""
 
 # =====
 
@@ -61,11 +61,11 @@ if ($PersistentServer -eq "1") {
     $restartFlag = "always"
 }
 
-echo "Starting container (in detach mode)..."
+Write-Output "Starting container (in detach mode)..."
 docker run --name=ocos -d -v $AbsVolumePaths -p $ports --restart $restartFlag -e "MODE=0" ocos_server
-echo ""
-echo "IMOPRTANT: You can see logs inside the Docker Desktop application..."
-echo 'In the containers tab (on the left) select "ocos" and you can access logs from that page'
-echo 'It might take a couple minutes for the logs to appear'
+Write-Output ""
+Write-Output "IMOPRTANT: You can see logs inside the Docker Desktop application..."
+Write-Output 'In the containers tab (on the left) select "ocos" and you can access logs from that page'
+Write-Output 'It might take a couple minutes for the logs to appear'
 
 Read-Host -Prompt "Program ended, press Enter to continue"
