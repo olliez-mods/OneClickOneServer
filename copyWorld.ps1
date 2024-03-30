@@ -28,11 +28,8 @@ Write-Output "  (Full Path [$PWD\$VolumePath])"
 
 # Test path existence for the folders and files below
 $volumeFolderExists = Test-Path "$PWD/$VolumePath"
-$minorGemsExist = Test-Path "$PWD/$VolumePath/minorGems"
 $OneLifeExists = Test-Path "$PWD/$VolumePath/OneLife"
-$OneLifeData7Exists = Test-Path "$PWD/$VolumePath/OneLifeData7"
 $OneLifeServerExists = Test-Path "$PWD/$VolumePath/OneLife/server/"
-$OneLifeServerAppExists = Test-Path "$PWD/$VolumePath/OneLife/server/OneLifeServer" # file
 
 Write-Output ""
 Write-Output ""
@@ -44,7 +41,7 @@ if(-not $volumeFolderExists){
     exit
 }
 if((-not $minorGemsExist) -or (-not $OneLifeExists) -or (-not $OneLifeData7Exists)){
-    Write-Output "One or all of the main folders (OneLife/MinorGems/OneLifeData7) was not found, make sure that the server built successfully before using copyWorld.ps1"
+    Write-Output " (./$VolumePath/OneLife) was not found, make sure that the server built successfully before using copyWorld.ps1"
     Read-Host "."
     exit
 }
@@ -53,12 +50,6 @@ if(-not $OneLifeServerExists){
     Read-Host "."
     exit
 }
-if(-not $OneLifeServerAppExists){
-    Write-Output "Could not find OneLifeServer application (./$VolumePath/OneLife/server/OneLifeServer), make sure that the server built successfully and runs before using copyWorld.ps1"
-    Read-Host "."
-    exit
-}
-
 
 . "./scripts/getWorldFiles.ps1"
 $worldFiles = Get-WorldFiles
