@@ -60,6 +60,10 @@ if(-not ($ServerVersion -match $regexForVersion)){
     Read-Host "Press enter"
     exit
 }
+if(-not ($ServerDataVersion -match $regexForVersion)){
+    Write-Output "ServerVersion:`"$ServerDataVersion`" is not an accepted format, is should be a number or `"latest`""
+    Read-Host "Press enter"
+}
 if(-not ($MinorGemsVersion -match $regexForVersion)){
     Write-Output "MinorGemsVersion:`"$MinorGemsVersion`" is not an accepted format, is should be a number or `"latest`""
     Read-Host "Press enter"
