@@ -68,14 +68,14 @@ if(-not ($MinorGemsVersion -match $regexForVersion)){
 
 
 # By default, don't delete the volume
-$buildFromScratch = $false
-
+$removeCurrentVolume = $false
+$continue = $false
 
 # If volume folder exists
 if (Test-Path "$PWD/$VolumePath" -PathType Container) {
 
     # Get the items within the volume folder
-    $items = Get-ChildItem -Path "$PWD/$VolumePath"
+    $items = Get-ChildItem "$PWD/$VolumePath"
 
     # If the folder has items in it, ask the user if we want to clear items, or build with existing files
     if ($items.Count -ne 0) {
@@ -86,18 +86,19 @@ if (Test-Path "$PWD/$VolumePath" -PathType Container) {
         $inp = Read-Host "Clear folder?(Y/N):"
 
         if ($inp -eq "Y" -Or $inp -eq "y") {
-            $buildFromScratch = $true
+            $removeCurrentVolume = $true
+            $continue = $true
         }else {
             Write-Output ""
-            Read-Host "Exiting Build script, Press Eneter to coninue"
+            Read-Host "Exiting Build script, Press Enter to coninue"
             exit
         }
     }
 # The folder doesn't exist, so we want to build from scratch and enter setup mode
 }else{
-    $buildFromScratch = $true
+    $removeCurrentVolume = $false
+    $continue = $true
 }
-
 
 # First delete old ocos_server image and container if it exists
 Write-Output ""
@@ -114,25 +115,26 @@ docker build -t ocos_server .
 Write-Output ""
 
 # If the user has said they want to clear volume and rebuild from scratch, call container in setup mode
-if ($buildFromScratch){
+if ($removeCurrentVolume){
     Write-Output ""
     Write-Output "Deleting Folder [$PWD\$VolumePath]"
     Remove-Item -Path "$PWD/$VolumePath" -Recurse -Force -ErrorAction SilentlyContinue
     Write-Output "Creating Folder [$PWD\$VolumePath]"
     New-Item -ItemType Directory -Name "$VolumePath" > $nul
-
-    Write-Output ""
-    Write-Output ""
-    Write-Output "Starting container in setup mode..."
-
-    $AbsVolumePaths = "$PWD" + "/" + "$VolumePath" + "/:/files/volume"
-
-    # then start container in setup mode (MODE env is set to 1)
-    docker run --name=ocos -it -v $AbsVolumePaths -e "MODE=1" -e "SERVER_VERSION=$ServerVersion" -e "GEMS_VERSION=$MinorGemsVersion" -e "SERVER_DATA_VERSION=$ServerDataVersion" ocos_server
-
-    Write-Output ""
     Write-Output ""
 }
+
+
+Write-Output ""
+Write-Output "Starting container in setup mode..."
+
+$AbsVolumePaths = "$PWD" + "/" + "$VolumePath" + "/:/files/volume"
+
+# then start container in setup mode (MODE env is set to 1)
+docker run --name=ocos -it -v $AbsVolumePaths -e "MODE=1" -e "SERVER_VERSION=$ServerVersion" -e "GEMS_VERSION=$MinorGemsVersion" -e "SERVER_DATA_VERSION=$ServerDataVersion" ocos_server
+
+Write-Output ""
+Write-Output ""
 
 Write-Output ""
 Read-Host -Prompt "Program ended, press Enter to continue"
