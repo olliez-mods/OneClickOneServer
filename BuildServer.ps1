@@ -35,8 +35,7 @@ $MinorGemsVersion = $iniConfig['MinorGemsVersion']
 
 Write-Output "Loaded port=$port"
 Write-Output "Loaded PersistentServer=$PersistentServer"
-Write-Output "Loaded VolumePath=$VolumePath"
-Write-Output "  (Full Path [$PWD\$VolumePath])"
+Write-Output "Loaded VolumePath=$VolumePath   (Full Path [$PWD\$VolumePath])"
 Write-Output "ServerVersion=$ServerVersion"
 Write-Output "ServerDataVersion=$ServerDataVersion"
 Write-Output "MinorGemsVersion=$MinorGemsVersion"
@@ -86,7 +85,7 @@ if (Test-Path "$PWD/$VolumePath" -PathType Container) {
         Write-Output "The provided volume folder [$PWD\$VolumePath] has existing files in it."
         Write-Output "Would you like to clear all files in this folder and make a fresh build?"
         Write-Output "Warning: This will delete any world files, so make a backup if nessasary"
-        $inp = Read-Host "Clear folder?(Y/N):"
+        $inp = Read-Host "Clear folder?(Y/N)"
 
         if ($inp -eq "Y" -Or $inp -eq "y") {
             $removeCurrentVolume = $true
@@ -132,10 +131,14 @@ Write-Output "Starting container in setup mode..."
 $AbsVolumePaths = "$PWD" + "/" + "$VolumePath" + "/:/files/volume"
 
 # then start container in setup mode (MODE env is set to 1)
+Write-Output ""
+Write-Output "=========================< DOCKER CONTAINER >========================="
+Write-Output ""
 docker run --name=ocos -it -v $AbsVolumePaths -e "MODE=1" -e "SERVER_VERSION=$ServerVersion" -e "GEMS_VERSION=$MinorGemsVersion" -e "SERVER_DATA_VERSION=$ServerDataVersion" ocos_server
-
 Write-Output ""
 Write-Output ""
+Write-Output "======================================================================"
 
+Write-Output ""
 Write-Output ""
 Read-Host -Prompt "Program ended, press Enter to continue"

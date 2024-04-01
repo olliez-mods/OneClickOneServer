@@ -89,4 +89,3 @@ serverVersion=`cat serverCodeVersionNumber.txt`
 echo
 echo
 echo "Done building server"
-echo

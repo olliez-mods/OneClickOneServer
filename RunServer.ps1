@@ -32,8 +32,7 @@ $VolumePath = $iniConfig['VolumePath']
 
 Write-Output "Loaded port=$port"
 Write-Output "Loaded PersistentServer=$PersistentServer"
-Write-Output "Loaded VolumePath:$VolumePath"
-Write-Output "  (Full Path [$PWD\$VolumePath])"
+Write-Output "Loaded VolumePath:$VolumePath    (Full Path [$PWD\$VolumePath])"
 
 $docker = Get-Process -Name "Docker Desktop"  -ErrorAction SilentlyContinue
 # Is docker running? If it's not start it
@@ -112,5 +111,6 @@ if($PersistentServer -ne "1"){
     Write-Output 'In the containers tab (on the left) select "ocos" and you can access logs from that page'
 }
 
+Write-Output ""
 Write-Output ""
 Read-Host -Prompt "Program ended, press Enter to continue"

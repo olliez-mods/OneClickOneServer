@@ -21,8 +21,7 @@ Get-Content -Path $iniFilePath | ForEach-Object {
 }
 
 $VolumePath = $iniConfig['VolumePath']
-Write-Output "Loaded VolumePath:$VolumePath"
-Write-Output "  (Full Path [$PWD\$VolumePath])"
+Write-Output "Loaded VolumePath:$VolumePath    (Full Path [$PWD\$VolumePath])"
 
 # =======================
 
