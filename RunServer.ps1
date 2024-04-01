@@ -82,7 +82,10 @@ if(-not $OneLifeServerAppExists){
 }
 
 # First delete old ocol container if it exists
+Write-Output ""
+Write-Output "Removing existing container if it exists"
 docker rm -f ocos
+Write-Output ""
 
 $ports = "$port" + ":8005"
 $AbsVolumePaths = "$PWD" + "/" + "$VolumePath" + "/:/files/volume"
@@ -97,7 +100,9 @@ Write-Output "Starting container..."
 if($PersistentServer -ne "1"){
     Write-Output ""
     Write-Output "=========================< DOCKER CONTAINER >========================="
+    Write-Output ""
     docker run --name=ocos -it -v $AbsVolumePaths -p $ports --restart $restartFlag -e "MODE=0" ocos_server
+    Write-Output ""
     Write-Output ""
     Write-Output "======================================================================"
 }else{
