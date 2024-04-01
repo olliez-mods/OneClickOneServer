@@ -93,11 +93,19 @@ if ($PersistentServer -eq "1") {
     $restartFlag = "always"
 }
 
-Write-Output "Starting container (in detach mode)..."
-docker run --name=ocos -d -v $AbsVolumePaths -p $ports --restart $restartFlag -e "MODE=0" ocos_server
-Write-Output ""
-Write-Output "IMOPRTANT: You can see logs inside the Docker Desktop application..."
-Write-Output 'In the containers tab (on the left) select "ocos" and you can access logs from that page'
-Write-Output 'It might take a couple minutes for the logs to appear'
+Write-Output "Starting container..."
+if($PersistentServer -ne "1"){
+    Write-Output ""
+    Write-Output "=========================< DOCKER CONTAINER >========================="
+    docker run --name=ocos -it -v $AbsVolumePaths -p $ports --restart $restartFlag -e "MODE=0" ocos_server
+    Write-Output ""
+    Write-Output "======================================================================"
+}else{
+    docker run --name=ocos -d -v $AbsVolumePaths -p $ports --restart $restartFlag -e "MODE=0" ocos_server
+    Write-Output ""
+    Write-Output "IMOPRTANT: You can see logs inside the Docker Desktop application..."
+    Write-Output 'In the containers tab (on the left) select "ocos" and you can access logs from that page'
+}
 
+Write-Output ""
 Read-Host -Prompt "Program ended, press Enter to continue"
