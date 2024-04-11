@@ -1,8 +1,7 @@
 # Original Script was derived from danomation: https://github.com/danomation/onehouroneclick/tree/main
 # Improved by ME, https://github.com/olliez-mods
 
-# Run with max perms avaliable to the user, May cause ignorable error
-Set-ExecutionPolicy -Scope CurrentUser Unrestricted -ErrorAction SilentlyContinue
+
 
 # ===== Load ContainerConfig.ini =====
 
@@ -17,7 +16,7 @@ Get-Content -Path $iniFilePath | ForEach-Object {
     $line = $_.Trim()
     
     # Skip empty lines and comments
-    if (-not [string]::IsNullOrEmpty($line) -and $line -notmatch '^\s*#') {
+    if (-not [string]::IsNullOrEmpty($line) -and $line -notmatch '^/s*#') {
         # Extract key and value
         $key, $value = $line -split '\s*=\s*', 2
 
@@ -31,29 +30,64 @@ $port = $iniConfig['Port']
 $PersistentServer = $iniConfig['PersistentServer']
 $VolumePath = $iniConfig['VolumePath']
 
-echo "Loaded port=$port"
-echo "Loaded PersistentServer=$PersistentServer"
-echo "Loaded VolumePath:$VolumePath"
-echo "  (Full Path [$PWD\$VolumePath])"
+Write-Output "Loaded port=$port"
+Write-Output "Loaded PersistentServer=$PersistentServer"
+Write-Output "Loaded VolumePath:$VolumePath    (Full Path [$PWD\$VolumePath])"
 
 $docker = Get-Process -Name "Docker Desktop"  -ErrorAction SilentlyContinue
 # Is docker running? If it's not start it
 if(-not $docker){
-    echo ""
-    echo "Docker Desktop not running, attempting to start it automatically"
-    start-Process -FilePath "C:\Program Files\Docker\Docker\Docker Desktop.exe" -WindowStyle Minimized
+    Write-Output ""
+    Write-Output "Docker Desktop not running, attempting to start it automatically"
+    start-Process -FilePath "C:/Program Files/Docker/Docker/Docker Desktop.exe" -WindowStyle Minimized
     Read-Host "Press enter once Docker Desktop starts (If it doesn't start, do it maunaly)"
 }
 
-echo ""
+Write-Output ""
 
-# =====
+# ==========
+
+# Test path existence for the folders and files below
+$volumeFolderExists = Test-Path "$PWD/$VolumePath"
+$minorGemsExist = Test-Path "$PWD/$VolumePath/minorGems"
+$OneLifeExists = Test-Path "$PWD/$VolumePath/OneLife"
+$OneLifeData7Exists = Test-Path "$PWD/$VolumePath/OneLifeData7"
+$OneLifeServerExists = Test-Path "$PWD/$VolumePath/OneLife/server/"
+$OneLifeServerAppExists = Test-Path "$PWD/$VolumePath/OneLife/server/OneLifeServer" # file
+
+Write-Output ""
+Write-Output ""
+
+# If any of them dont exist, throw an error message and exit
+if(-not $volumeFolderExists){
+    Write-Output "Volume folder was not found, make sure you make sure that the server built successfully before running"
+    Read-Host "."
+    exit
+}
+if((-not $minorGemsExist) -or (-not $OneLifeExists) -or (-not $OneLifeData7Exists)){
+    Write-Output "One or all of the main folders (OneLife/MinorGems/OneLifeData7) was not found, make sure that the server built successfully before running"
+    Read-Host "."
+    exit
+}
+if(-not $OneLifeServerExists){
+    Write-Output "The server folder (./$VolumePath/OneLife/server) cannot be found, make sure that the server built successfully before running"
+    Read-Host "."
+    exit
+}
+if(-not $OneLifeServerAppExists){
+    Write-Output "Could not find OneLifeServer application (./$VolumePath/OneLife/server/OneLifeServer), make sure that the server built successfully before running"
+    Read-Host "."
+    exit
+}
 
 # First delete old ocol container if it exists
+Write-Output ""
+Write-Output "Removing existing container if it exists"
 docker rm -f ocos
+Write-Output ""
 
 $ports = "$port" + ":8005"
-$AbsVolumePaths = "$PWD" + "\" + "$VolumePath" + "\:/files/volume"
+$AbsVolumePaths = "$PWD" + "/" + "$VolumePath" + "/:/files/volume"
 
 # If the flag is set to "always" then when the computer or Docker Desktop reboots, this container will restart automagically
 $restartFlag = "no"
@@ -61,11 +95,22 @@ if ($PersistentServer -eq "1") {
     $restartFlag = "always"
 }
 
-echo "Starting container (in detach mode)..."
-docker run --name=ocos -d -v $AbsVolumePaths -p $ports --restart $restartFlag -e "MODE=0" ocos_server
-echo ""
-echo "IMOPRTANT: You can see logs inside the Docker Desktop application..."
-echo 'In the containers tab (on the left) select "ocos" and you can access logs from that page'
-echo 'It might take a couple minutes for the logs to appear'
+Write-Output "Starting container..."
+if($PersistentServer -ne "1"){
+    Write-Output ""
+    Write-Output "=========================< DOCKER CONTAINER >========================="
+    Write-Output ""
+    docker run --name=ocos -it -v $AbsVolumePaths -p $ports --restart $restartFlag -e "MODE=0" ocos_server
+    Write-Output ""
+    Write-Output ""
+    Write-Output "======================================================================"
+}else{
+    docker run --name=ocos -d -v $AbsVolumePaths -p $ports --restart $restartFlag -e "MODE=0" ocos_server
+    Write-Output ""
+    Write-Output "IMOPRTANT: You can see logs inside the Docker Desktop application..."
+    Write-Output 'In the containers tab (on the left) select "ocos" and you can access logs from that page'
+}
 
+Write-Output ""
+Write-Output ""
 Read-Host -Prompt "Program ended, press Enter to continue"
