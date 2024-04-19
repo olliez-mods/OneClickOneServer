@@ -1,6 +1,10 @@
 How to setup and run OneClickOneServer<br>
 
-For Windows 11 you will need to enable powershell. Open powershell as administrator and run the command: "Set-ExecutionPolicy Unrestricted"
+For Windows 11 you will need to enable powershell. Open powershell as administrator and run the command: 
+```console
+Set-ExecutionPolicy Unrestricted
+```
+<br>
 
 Note: Make sure you install Docker Desktop ([Link](https://www.docker.com/products/docker-desktop/)) and it is running properly!.<br>
 
