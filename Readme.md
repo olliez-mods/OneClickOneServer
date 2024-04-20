@@ -6,7 +6,7 @@ Set-ExecutionPolicy Unrestricted
 ```
 <br>
 
-[Video Tutorial](https://youtu.be/Ovkx85V-3-M){:target="_blank" rel="noopener"}
+[Video Tutorial](https://youtu.be/Ovkx85V-3-M)
 
 Note: Make sure you install Docker Desktop ([Link](https://www.docker.com/products/docker-desktop/)) and it is running properly!.<br>
 
