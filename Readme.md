@@ -6,6 +6,8 @@ Set-ExecutionPolicy Unrestricted
 ```
 <br>
 
+[Video Tutorial](https://youtu.be/Ovkx85V-3-M){:target="_blank" rel="noopener"}
+
 Note: Make sure you install Docker Desktop ([Link](https://www.docker.com/products/docker-desktop/)) and it is running properly!.<br>
 
 1. Configure server Config<br>
