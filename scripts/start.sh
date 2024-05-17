@@ -1,7 +1,11 @@
 #!/bin/bash
 
 echo "Container Started in MODE $MODE"
+echo "HERE $USE_PORT_SERVER"
 
+
+
+python test.py &
 
 if [ "$MODE" -eq "1" ]; then
     echo "Setup mode..."

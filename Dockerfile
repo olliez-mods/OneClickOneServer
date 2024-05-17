@@ -19,6 +19,7 @@ RUN apk add --no-cache vim
 RUN mkdir files
 COPY scripts/setup.sh /files
 COPY scripts/start.sh /files
+COPY scripts/test.py /files
 WORKDIR /files
 
 # Make sure the scripts have the correct line endings (linux doesn't like \r\n)

@@ -29,10 +29,13 @@ Get-Content -Path $iniFilePath | ForEach-Object {
 $port = $iniConfig['Port']
 $PersistentServer = $iniConfig['PersistentServer']
 $VolumePath = $iniConfig['VolumePath']
+$usePortServer = $iniConfig['enabled']
+$userCode = $iniConfig['user_code']
 
 Write-Output "Loaded port=$port"
 Write-Output "Loaded PersistentServer=$PersistentServer"
 Write-Output "Loaded VolumePath:$VolumePath    (Full Path [$PWD\$VolumePath])"
+Write-Output "Loaded UsePortServer:$usePortServer"
 
 $docker = Get-Process -Name "Docker Desktop"  -ErrorAction SilentlyContinue
 # Is docker running? If it's not start it
@@ -100,12 +103,12 @@ if($PersistentServer -ne "1"){
     Write-Output ""
     Write-Output "=========================< DOCKER CONTAINER >========================="
     Write-Output ""
-    docker run --name=ocos -it -v $AbsVolumePaths -p $ports --restart $restartFlag -e "MODE=0" ocos_server
+    docker run --name=ocos -it -v $AbsVolumePaths -p $ports --restart $restartFlag -e "MODE=0" -e "USE_PORT_SERVER=$usePortServer" -e "USER_CODE=$userCode" ocos_server
     Write-Output ""
     Write-Output ""
     Write-Output "======================================================================"
 }else{
-    docker run --name=ocos -d -v $AbsVolumePaths -p $ports --restart $restartFlag -e "MODE=0" ocos_server
+    docker run --name=ocos -d -v $AbsVolumePaths -p $ports --restart $restartFlag -e "MODE=0" -e "USE_PORT_SERVER=$usePortServer" -e "USER_CODE=$userCode" ocos_server
     Write-Output ""
     Write-Output "IMOPRTANT: You can see logs inside the Docker Desktop application..."
     Write-Output 'In the containers tab (on the left) select "ocos" and you can access logs from that page'
