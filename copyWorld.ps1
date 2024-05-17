@@ -29,6 +29,8 @@ Write-Output "Loaded VolumePath:$VolumePath    (Full Path [$PWD\$VolumePath])"
 $volumeFolderExists = Test-Path "$PWD/$VolumePath"
 $OneLifeExists = Test-Path "$PWD/$VolumePath/OneLife"
 $OneLifeServerExists = Test-Path "$PWD/$VolumePath/OneLife/server/"
+$minorGemsExists = Test-Path "$PWD/$VolumePath/minorGems"
+$OneLifeData7Exists = Test-Path "$PWD/$VolumePath/OneLifeData7"
 
 Write-Output ""
 Write-Output ""
@@ -39,8 +41,8 @@ if(-not $volumeFolderExists){
     Read-Host "."
     exit
 }
-if((-not $minorGemsExist) -or (-not $OneLifeExists) -or (-not $OneLifeData7Exists)){
-    Write-Output " (./$VolumePath/OneLife) was not found, make sure that the server built successfully before using copyWorld.ps1"
+if((-not $minorGemsExists) -or (-not $OneLifeExists) -or (-not $OneLifeData7Exists)){
+    Write-Output " (./$VolumePath/*) was not found, make sure that the server built successfully before using copyWorld.ps1"
     Read-Host "."
     exit
 }
