@@ -4,6 +4,14 @@
 
 Welcome to the OneClickOneServer setup guide. This guide will walk you through the steps to get your server up and running on Windows 10/11.
 
+## Quick Start (Linux/macOS)
+
+To download and run the setup script directly with curl:
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/olliez-mods/OneClickOneServer/main/scripts/setup_direct.sh | bash
+```
+
 ## Prerequisites
 
 1. **(Optional) Enable PowerShell Execution Policy**
