@@ -172,3 +172,56 @@ chmod +x run
 echo
 echo
 echo "Done building server"
+
+# Adjust common server settings
+read -p "Would you like to adjust common server settings? (y/n): " ADJUST_SETTINGS
+if [ "$ADJUST_SETTINGS" == "y" ] || [ "$ADJUST_SETTINGS" == "Y" ]; then
+    # settings, filenames, recommended values, descriptions
+    SETTINGS_INFO=(
+        "useArcServer.ini" "0" "Requires Jason"
+        "useCurseServer.ini" "0" "Requires Jason"
+        "useFitnessServer.ini" "0" "Requires Jason"
+        "useLifeServer.ini" "0" "Requires Jason"
+        "useLineageServer.ini" "0" "Requires Jason"
+        "useStatsServer.ini" "0" "Requires Jason"
+        "allowVOGMode.ini" "0" "Enable Voice of God mode"
+        "vogAllowAccounts.ini" "" "Vog allowed email"
+        "forceAllPlayersEve.ini" "0" "Force all players to be Eve"
+        "forceEveLocation.ini" "0" "Force all Eves to start in the same location"
+        "forceEveLocationX.ini" "0" "X coordinate for forced Eve location"
+        "forceEveLocationY.ini" "0" "Y coordinate for forced Eve location"
+        "requireClientPassword.ini" "0" "Require client password for login"
+        "clientPassword.ini" "" "Client password for login"
+        "minFoodDecrementSeconds.ini" "4.0" "How many seconds between food decrements (larger number = infinite food)"
+        "mapCellForgottenSeconds.ini" "999999999999" "How many seconds until a map cell is forgotten (large number = never)"
+        "port.ini" "8005" "Server port number"
+        "barrierOn.ini" "0" "Enable world barrier"
+        "barrierRadius.ini" "1000" "Radius of world barrier (if enabled)"
+        "maxPlayers.ini" "100" "Maximum number of players on the server"
+    )
+    cd OneLife/server/settings
+    for ((i=0; i<${#SETTINGS_INFO[@]}; i+=3)); do
+        FILENAME=${SETTINGS_INFO[i]}
+        RECOMMENDED_VALUE=${SETTINGS_INFO[i+1]}
+        DESCRIPTION=${SETTINGS_INFO[i+2]}
+        
+        CURRENT_VALUE=""
+        if [ -f "$FILENAME" ]; then
+            CURRENT_VALUE=$(cat "$FILENAME")
+        fi
+        
+        echo ""
+        echo "Setting: $FILENAME"
+        echo "Description: $DESCRIPTION"
+        echo "Current Value: ${CURRENT_VALUE:-<not set>}"
+        read -p "Enter new value (recommended: $RECOMMENDED_VALUE) or press Enter to use recommended: " NEW_VALUE
+        if [ -n "$NEW_VALUE" ]; then
+            echo "$NEW_VALUE" > "$FILENAME"
+            echo "Updated $FILENAME to '$NEW_VALUE'."
+        else
+            echo "$RECOMMENDED_VALUE" > "$FILENAME"
+            echo "Set $FILENAME to recommended value '$RECOMMENDED_VALUE'."
+        fi
+    done
+    cd ../../..
+fi
