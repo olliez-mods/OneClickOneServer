@@ -6,11 +6,16 @@ Welcome to the OneClickOneServer setup guide. This guide will walk you through t
 
 ## Quick Start (Linux/macOS)
 
-To download and run the setup script directly with curl:
+To download and run the setup script interactively with curl:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/olliez-mods/OneClickOneServer/main/scripts/setup_direct.sh | bash
+curl -fsSL https://raw.githubusercontent.com/olliez-mods/OneClickOneServer/main/scripts/setup_direct.sh -o setup_direct.sh && bash setup_direct.sh
 ```
+Run afterwards with
+```sh
+./run
+```
+
 
 ## Prerequisites
 
