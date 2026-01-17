@@ -2,7 +2,7 @@
 #!/bin/bash
 
 # Ensure required packages are installed
-REQUIRED_PKGS=(git make gcc wget)
+REQUIRED_PKGS=(git make gcc)
 MISSING_PKGS=()
 for pkg in "${REQUIRED_PKGS[@]}"; do
     if ! command -v $pkg >/dev/null 2>&1; then
