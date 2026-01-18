@@ -108,6 +108,22 @@ cd ../OneLife
 echo "checking out OneLife with version v$SERVER_VERSION"
 git checkout -q OneLife_v$SERVER_VERSION
 
+# ONE LIFE DATA
+cd ../OneLifeData7
+echo "checking out OneLifeData7 with version v$SERVER_DATA_VERSION"
+git checkout -q OneLife_v$SERVER_DATA_VERSION
+
+echo ""
+echo ""
+
+cd ..
+
+
+cd OneLife
+git pull --tags
+git checkout OneLife_liveServer
+
+# Apply patch after all checkouts
 if [ "$APPLY_PATCH" = true ]; then
     echo "Applying patch to OneLife..."
     git apply ../$PATCH_FILE
@@ -125,20 +141,6 @@ if [ "$APPLY_PATCH" = true ]; then
         rm -f ../$PATCH_FILE
     fi
 fi
-
-# ONE LIFE DATA
-cd ../OneLifeData7
-echo "checking out OneLifeData7 with version v$SERVER_DATA_VERSION"
-git checkout -q OneLife_v$SERVER_DATA_VERSION
-
-echo ""
-echo ""
-
-cd ..
-
-cd OneLife
-git pull --tags
-git checkout OneLife_liveServer
 cd ..
 
 echo ""
@@ -185,6 +187,7 @@ read -p "Would you like to adjust common server settings? (y/n): " ADJUST_SETTIN
 if [ "$ADJUST_SETTINGS" == "y" ] || [ "$ADJUST_SETTINGS" == "Y" ]; then
     # settings, filenames, recommended values, descriptions
     SETTINGS_INFO=(
+        "requireTicketServerCheck.ini" "1" "Require real accounts to login"
         "useArcServer.ini" "0" "Requires Jason"
         "useCurseServer.ini" "0" "Requires Jason"
         "useFitnessServer.ini" "0" "Requires Jason"
