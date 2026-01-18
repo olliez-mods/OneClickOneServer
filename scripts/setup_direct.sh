@@ -149,6 +149,13 @@ echo ""
 cd OneLife/server
 ./configure 1
 make
+
+# Did the build succeed?
+if [ $? -ne 0 ]; then
+    echo "Build failed, exiting."
+    exit 1
+fi
+
 ln -s ../../OneLifeData7/objects .
 ln -s ../../OneLifeData7/transitions .
 ln -s ../../OneLifeData7/categories .
